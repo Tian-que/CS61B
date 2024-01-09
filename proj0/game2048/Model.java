@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author Tian_que
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -109,11 +109,15 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
+        this.board.setViewingPerspective(side);
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-
+        for (int col = 0; col < this.board.size(); col++) {
+            changed = moveCol(col, changed);
+        }
+        this.board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
@@ -121,6 +125,41 @@ public class Model extends Observable {
         return changed;
     }
 
+    private boolean moveCol(int col, boolean changed) {
+        int merged = this.board.size();
+        for (int i = this.board.size() - 2; i >= 0; i--) {
+            if (this.board.tile(col, i) == null) {
+                continue;
+            }
+            int targetPlace = this.board.size() - 1;
+            int nowPlace = i;
+            Tile t = board.tile(col, i);
+            while (nowPlace != targetPlace && this.board.tile(col, nowPlace+1) == null) {
+                nowPlace += 1;
+            }
+            if (nowPlace == targetPlace) {
+                board.move(col, nowPlace, t);
+                changed = true;
+                continue;
+            }
+
+            if (isUpSame(this.board, col, i, nowPlace) && nowPlace + 1 < merged) {
+                if (board.move(col, nowPlace + 1, t)) {
+                    this.score += board.tile(col, nowPlace + 1).value();
+                    merged = nowPlace + 1;
+                }
+
+            } else {
+                board.move(col, nowPlace, t);
+            }
+            changed = true;
+        }
+        return changed;
+    }
+
+    private boolean isUpSame(Board b, int col, int now, int row) {
+        return b.tile(col, now).value() == b.tile(col, row + 1).value();
+    }
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
@@ -138,6 +177,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +194,13 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) != null && b.tile(i, j).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +212,19 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null) {
+                    return true;
+                }
+                if (j != b.size() -1 && b.tile(i, j).value() == b.tile(i, j+1).value()) {
+                    return true;
+                }
+                if (i != b.size() -1 && b.tile(i, j).value() == b.tile(i + 1, j).value()) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
