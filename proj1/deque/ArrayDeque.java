@@ -33,7 +33,7 @@ public class ArrayDeque<T> {
         }
         size += 1;
         arrays[nextFirst] = x;
-        nextFirst = (nextFirst - 1) % arrays.length;
+        nextFirst = (nextFirst - 1 + arrays.length) % arrays.length;
     }
 
     public void addLast(T x) {
@@ -83,7 +83,7 @@ public class ArrayDeque<T> {
             resize((int) (size * 2));
         }
         size -= 1;
-        nextLast = (nextLast - 1) % arrays.length;
+        nextLast = (nextLast - 1 + arrays.length) % arrays.length;
         return arrays[nextLast];
     }
 
