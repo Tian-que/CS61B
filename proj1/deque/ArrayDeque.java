@@ -45,10 +45,6 @@ public class ArrayDeque<T> implements Deque<T>{
         nextLast = (nextLast + 1) % arrays.length;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     public int size() {
         return size;
     }
