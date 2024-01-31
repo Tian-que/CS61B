@@ -97,12 +97,14 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
         }
 
-        if (o instanceof LinkedListDeque ld) {
+        if (this.getClass() == o.getClass()) {
+            LinkedListDeque<T> ld = (LinkedListDeque<T>) o;
             if (size != ld.size()) {
                 return false;
             }

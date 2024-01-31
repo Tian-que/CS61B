@@ -94,12 +94,14 @@ public class ArrayDeque<T> {
         return arrays[(index + nextFirst + 1) % arrays.length];
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
         }
 
-        if (o instanceof ArrayDeque ld) {
+        if (this.getClass() == o.getClass()) {
+            ArrayDeque<T> ld = (ArrayDeque<T>) o;
             if (size != ld.size()) {
                 return false;
             }
