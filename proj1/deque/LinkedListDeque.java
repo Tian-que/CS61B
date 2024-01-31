@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class IntNode {
         private T item;
         private IntNode next;
@@ -16,12 +16,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     private IntNode sentinel;
+    private IntNode endSentinel;
     private int size;
 
     public LinkedListDeque() {
         sentinel = new IntNode(null, null, null);
-        sentinel.prev = sentinel;
-        sentinel.next = sentinel;
+        endSentinel = new IntNode(null, null, null);
+        endSentinel.prev = sentinel;
+        sentinel.next = endSentinel;
         size = 0;
     }
 
@@ -33,9 +35,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     public void addLast(T item) {
-        IntNode oldLast = sentinel.prev;
-        sentinel.prev = new IntNode(item, sentinel, oldLast);
-        oldLast.next = sentinel.prev;
+        IntNode oldLast = endSentinel.prev;
+        endSentinel.prev = new IntNode(item, endSentinel, oldLast);
+        oldLast.next = endSentinel.prev;
         size += 1;
     }
 
@@ -59,7 +61,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         }
         size -= 1;
         IntNode firstNode = sentinel.next;
-        sentinel.next = sentinel.next.next;
+        sentinel.next = firstNode.next;
         sentinel.next.prev = sentinel;
         return firstNode.item;
     }
@@ -69,9 +71,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
             return null;
         }
         size -= 1;
-        IntNode lastNode = sentinel.prev;
-        sentinel.prev = sentinel.prev.prev;
-        sentinel.prev.next = sentinel;
+        IntNode lastNode = endSentinel.prev;
+        endSentinel.prev = lastNode.prev;
+        endSentinel.prev.next = endSentinel;
         return lastNode.item;
     }
 
@@ -114,7 +116,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         private int now;
         private IntNode iterSentinel;
 
-        public LLDIterator() {
+        LLDIterator() {
             now = 0;
             iterSentinel = sentinel;
         }

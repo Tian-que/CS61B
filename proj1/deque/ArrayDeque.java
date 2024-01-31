@@ -116,7 +116,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     private class ADIterator implements Iterator<T> {
         private int now;
 
-        public ADIterator() {
+        ADIterator() {
             now = 0;
         }
 
