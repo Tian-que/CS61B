@@ -1,9 +1,8 @@
 package deque;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
 
     private T[] arrays;
     private int size;
@@ -132,7 +131,7 @@ public class ArrayDeque<T> implements Deque<T>{
         }
     }
 
-    public Iterator<T> itearator() {
+    public Iterator<T> iterator() {
         return new ADIterator();
     }
 }

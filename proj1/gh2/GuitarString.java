@@ -1,8 +1,6 @@
 package gh2;
 
-// TODO: uncomment the following import once you're ready to start this portion
-// import deque.Deque;
-// TODO: maybe more imports
+ import deque.Deque;
 
 import deque.ArrayDeque;
 import deque.LinkedListDeque;
@@ -16,8 +14,7 @@ public class GuitarString {
     private static final double DECAY = .996; // energy decay factor
 
     /* Buffer for storing sound data. */
-    // TODO: uncomment the following line once you're ready to start this portion
-     private ArrayDeque<Double> buffer;
+     private Deque<Double> buffer;
      private double front;
 
     /* Create a guitar string of the given frequency.  */
@@ -42,9 +39,6 @@ public class GuitarString {
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       **Do not call StdAudio.play().**
         front = buffer.removeFirst();
         buffer.addLast((front + buffer.get(0)) * 0.5 * DECAY);
     }
@@ -54,4 +48,3 @@ public class GuitarString {
         return buffer.get(0);
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.
