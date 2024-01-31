@@ -131,7 +131,17 @@ public class ArrayDequeTest {
         for (double i = 99; i > 50; i--) {
             assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
         }
+    }
 
+    @Test
+    public void iteratorTest() {
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        for (int i = 0; i < 100; i++) {
+            lld1.addLast(i);
+        }
 
+        for (Integer i : lld1) {
+            System.out.println(i);
+        }
     }
 }

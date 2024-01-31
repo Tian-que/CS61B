@@ -127,7 +127,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
         @Override
         public T next() {
-            return get(now);
+            T retValue = get(now);
+            now += 1;
+            return retValue;
         }
     }
 
