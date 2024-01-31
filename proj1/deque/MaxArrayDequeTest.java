@@ -25,4 +25,17 @@ public class MaxArrayDequeTest {
             }
         }), 0);
     }
+
+    @Test
+    public void LLDShouldEqAd() {
+        LinkedListDeque<Integer> lld = new LinkedListDeque<>();
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+        for (int i = 0; i < 10; i++) {
+            lld.addLast(i);
+            ad.addLast(i);
+        }
+
+        assertTrue(lld.equals(ad));
+    }
 }
